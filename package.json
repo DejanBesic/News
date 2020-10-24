@@ -5,13 +5,17 @@
   "scripts": {
     "android": "react-native run-android --port 9000",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native start --port 9000",
+    "start:reset": "react-native start --reset-cache --port 9000",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.6",
+    "@react-navigation/stack": "^5.9.3",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-gesture-handler": "^1.8.0",
@@ -20,6 +24,7 @@
     "react-native-screens": "^2.11.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "redux-storage": "^4.1.2",
     "redux-storage-engine-localstorage": "^1.1.4",
     "redux-storage-engine-reactnativeasyncstorage": "^1.0.7",
@@ -28,6 +33,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/register": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-eslint": "^10.1.0",
