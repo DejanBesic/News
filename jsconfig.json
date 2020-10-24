@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "baseUrl": "./",
+    "paths": {
+      "Components": ["src/components/index.js"]
+    }
+  },
+  "exclude": ["node_modules", "android", "ios"]
+}
