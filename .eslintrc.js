@@ -1,4 +1,5 @@
 const aliasPaths = require('./aliasPaths');
+require('babel-register');
 
 module.exports = {
   parser: 'babel-eslint',
@@ -10,24 +11,29 @@ module.exports = {
       },
     },
   },
-  plugins: ['react', 'import', 'eslint-plugin-prettier', 'eslint-plugin-react'],
+  plugins: [
+    'react',
+    'react-hooks',
+    'import',
+    'eslint-plugin-prettier',
+    'eslint-plugin-react',
+  ],
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prefer-stateless-function': [0],
     'react/destructuring-assignment': [0],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
     'prettier/prettier': [
       'error',
       {
         trailingComma: 'all',
         singleQuote: true,
-        printWidth: 100,
+        printWidth: 80,
         semi: true,
-        jsxBracketSameLine: true,
         endOfLine: 'auto',
       },
     ],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
   },
   env: {
     jest: true,

@@ -1,5 +1,5 @@
-const path = require('path');
-
 module.exports = {
-  Components: path.resolve(__dirname, 'src/components/'),
+  Components: './src/components/',
+  Actions: './src/store/actions/',
+  Reducers: './src/store/reducers/'
 };

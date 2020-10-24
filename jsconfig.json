@@ -3,7 +3,9 @@
     "module": "commonjs",
     "baseUrl": "./",
     "paths": {
-      "Components": ["src/components/index.js"]
+      "Components": ["src/components/index.js"],
+      "Actions/*": ["src/store/actions/*"],
+      "Reducers/*": ["src/store/reducers/"]
     }
   },
   "exclude": ["node_modules", "android", "ios"]
