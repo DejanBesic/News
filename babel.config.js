@@ -1,11 +1,18 @@
-const aliasPaths = require('./aliasPaths');
-
-const presets = ['module:metro-react-native-babel-preset'];
+const presets = [
+  'module:metro-react-native-babel-preset',
+  ['@babel/preset-env', { targets: { node: 'current' } }],
+];
 const plugins = [
   [
     'module-resolver',
     {
-      alias: aliasPaths,
+      alias: {
+        Components: './src/components/',
+        Actions: './src/store/actions/',
+        Reducers: './src/store/reducers/',
+        Screens: './src/screens/',
+        Utils: './src/utils/',
+      },
     },
   ],
 ];

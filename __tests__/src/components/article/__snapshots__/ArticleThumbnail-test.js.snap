@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleThumbnail doesn	 crash without props 1`] = `
+<RNGestureHandlerButton
+  collapsable={false}
+  onGestureEvent={[Function]}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+  onHandlerStateChange={[Function]}
+  rippleColor={0}
+>
+  <View
+    accessible={true}
+    style={
+      Object {
+        "backgroundColor": "rgba(218,211,200,0.7)",
+        "borderRadius": 5,
+        "paddingBottom": 15,
+        "paddingLeft": 10,
+        "paddingRight": 10,
+        "paddingTop": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "lineHeight": 20,
+          },
+        ]
+      }
+    >
+      
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "height": 200,
+              "marginBottom": 5,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "marginTop": 5,
+            },
+          ],
+        ]
+      }
+    >
+      <FastImageView
+        resizeMode="cover"
+        source={
+          Object {
+            "priority": "normal",
+            "uri": "",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 18,
+          },
+        ]
+      }
+    >
+      
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "display": "flex",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2f92dd",
+              "fontSize": 15,
+            },
+          ]
+        }
+      >
+        More &gt;
+      </Text>
+    </View>
+  </View>
+</RNGestureHandlerButton>
+`;
+
+exports[`ArticleThumbnail renders correctly with props 1`] = `
+<RNGestureHandlerButton
+  collapsable={false}
+  onGestureEvent={[Function]}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+  onHandlerStateChange={[Function]}
+  rippleColor={0}
+>
+  <View
+    accessible={true}
+    style={
+      Object {
+        "backgroundColor": "rgba(218,211,200,0.7)",
+        "borderRadius": 5,
+        "paddingBottom": 15,
+        "paddingLeft": 10,
+        "paddingRight": 10,
+        "paddingTop": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "lineHeight": 20,
+          },
+        ]
+      }
+    >
+      Title
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
+          },
+          Array [
+            Object {
+              "height": 200,
+              "marginBottom": 5,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "marginTop": 5,
+            },
+          ],
+        ]
+      }
+    >
+      <FastImageView
+        resizeMode="cover"
+        source={
+          Object {
+            "priority": "normal",
+            "uri": "https://fakeurl.com/someimageurl.jpg",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "fontSize": 18,
+          },
+        ]
+      }
+    >
+      Description
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "flex-end",
+            "display": "flex",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2f92dd",
+              "fontSize": 15,
+            },
+          ]
+        }
+      >
+        More &gt;
+      </Text>
+    </View>
+  </View>
+</RNGestureHandlerButton>
+`;
