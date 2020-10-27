@@ -4,8 +4,10 @@
     "baseUrl": "./",
     "paths": {
       "Components": ["src/components/index.js"],
+      "Screens": ["src/screens/index.js"],
       "Actions/*": ["src/store/actions/*"],
-      "Reducers/*": ["src/store/reducers/"]
+      "Reducers/*": ["src/store/reducers/*"],
+      "Utils/*": ["src/utils/*"]
     }
   },
   "exclude": ["node_modules", "android", "ios"]

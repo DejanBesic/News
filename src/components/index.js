@@ -1,4 +1,5 @@
-import ComponentA from './ComponentA';
-import ComponentB from './ComponentB';
+import ArticleThumbnail from './article/ArticleThumbnail';
+import TouchableIcon from './common/TouchableIcon';
+import NavigationBar from './navigation/NavigationBar';
 
-export { ComponentA, ComponentB };
+export { ArticleThumbnail, NavigationBar, TouchableIcon };

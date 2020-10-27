@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
 import * as reduxStorage from 'redux-storage';
-import news, { initialState as newsInitialState } from './newsReducer';
+import topNews, { initialState as topNewsInitialState } from './topNewsReducer';
+import country, { initialState as countryInitialState } from './countryReducer';
 
 export const initialState = {
-  news: newsInitialState,
+  topNews: topNewsInitialState,
+  country: countryInitialState,
 };
 
 export const reducer = reduxStorage.reducer(
   combineReducers({
-    news,
-  }),
+    topNews,
+    country,
+  })
 );
