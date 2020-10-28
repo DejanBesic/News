@@ -9,6 +9,7 @@ const Container = styled(TouchableWithoutFeedback)`
   background-color: ${Colors.swirl07};
   padding: 15px 10px;
   border-radius: 5px;
+  min-height: 400px;
 `;
 
 const StyledImage = styled(FastImage)`
@@ -26,35 +27,18 @@ const Description = styled.Text`
   font-size: 18px;
 `;
 
-const More = styled.Text`
-  color: ${Colors.curiousBlue};
-  font-size: 15px;
-`;
-
-const ButtonWrapper = styled.View`
-  display: flex;
-  align-items: flex-end;
-`;
-
-const ArticleThumbnail = (props) => {
-  const { title, urlToImage, description, onPress } = props;
-
-  return (
-    <Container onPress={onPress}>
-      <Title>{title}</Title>
-      <StyledImage
-        source={{
-          uri: urlToImage,
-          priority: FastImage.priority.normal,
-        }}
-      />
-      <Description>{description}</Description>
-      <ButtonWrapper>
-        <More>{'More >'}</More>
-      </ButtonWrapper>
-    </Container>
-  );
-};
+const ArticleThumbnail = ({ title, urlToImage, description, onPress }) => (
+  <Container onPress={onPress}>
+    <Title>{title}</Title>
+    <StyledImage
+      source={{
+        uri: urlToImage,
+        priority: FastImage.priority.normal,
+      }}
+    />
+    <Description>{description}</Description>
+  </Container>
+);
 
 const { string, func } = PropTypes;
 ArticleThumbnail.propTypes = {

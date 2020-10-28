@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
-import { articleSelector } from 'Actions/news';
+import { selectArticleById } from 'Actions/news';
+import { selectArticleFromCategoryById } from 'Actions/categories';
 
 const Container = styled.ScrollView`
   padding: 15px 10px;
@@ -26,9 +27,7 @@ const Description = styled.Text`
   font-size: 18px;
 `;
 
-const Article = (props) => {
-  const { article } = props;
-  const { title, urlToImage, content } = article || {};
+const Article = ({ title, urlToImage, content }) => {
   return (
     <Container>
       <Title>{title}</Title>
@@ -45,22 +44,25 @@ const Article = (props) => {
 
 const { string } = PropTypes;
 Article.propTypes = {
-  article: shape({
-    title: string,
-    urlToImage: string,
-    content: string,
-  }),
+  title: string,
+  urlToImage: string,
+  content: string,
 };
 
 Article.defaultProps = {
-  article: {},
+  title: '',
+  urlToImage: '',
+  content: '',
 };
 
-const mapState = ({ topNews }, { route }) => {
+const mapState = ({ topNews, categories }, { route }) => {
   const { params } = route || {};
-  const { id } = params || {};
+  const { id, isCategory } = params || {};
+  const article = isCategory
+    ? selectArticleFromCategoryById(categories, id)
+    : selectArticleById(topNews, id);
   return {
-    article: articleSelector(topNews, id),
+    ...article,
   };
 };
 

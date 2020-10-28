@@ -5,9 +5,10 @@ export const navigationRef = React.createRef();
 
 export const screenKeys = {
   article: 'Article',
-  topNews: 'Top News',
   categories: 'Categories',
+  category: 'Category',
   search: 'Search',
+  topNews: 'Top News',
 };
 
 export const navigate = (name, params) => {
