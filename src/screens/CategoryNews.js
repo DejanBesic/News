@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components/native';
 import { ArticleThumbnail } from 'Components';
-import { getTopNews } from 'Actions/news';
 import { screenKeys } from 'Actions/navigation';
+import { getTopNewsForCategory } from 'Actions/categories';
 
 const Container = styled.View``;
 
@@ -21,32 +21,34 @@ const Title = styled.Text`
   font-weight: bold;
 `;
 
-const TopNews = ({
-  fetchTopNews,
+const CategoryNews = ({
+  fetchTopNewsForCategory,
   isLoading,
   articles,
   navigation,
+  name,
   latestPage,
+  country,
 }) => {
   useEffect(() => {
-    fetchTopNews(1, 20);
+    fetchTopNewsForCategory(1, 20, name, false);
   }, []);
 
   const handleArticlePress = (id) => {
-    navigation.navigate(screenKeys.article, { id });
+    navigation.navigate(screenKeys.article, { id, isCategory: true });
   };
 
   const onEndReached = () => {
     if (!articles) return;
-    fetchTopNews(latestPage + 1, 20, true);
+    fetchTopNewsForCategory(latestPage + 1, 20, name, true);
   };
 
-  const onRefresh = () => fetchTopNews(1, 20);
+  const onRefresh = () => fetchTopNewsForCategory(1, 20, name, false);
 
   const renderItem = ({ item }) => {
     const { id, title, description, urlToImage, isTitle } = item || {};
     if (isTitle) {
-      return <Title>Top news from Great Britain:</Title>;
+      return <Title>{`Top ${name.toLowerCase()} news from ${country}`}</Title>;
     }
 
     return (
@@ -77,8 +79,8 @@ const TopNews = ({
 };
 
 const { func, bool, arrayOf, shape, number } = PropTypes;
-TopNews.propTypes = {
-  fetchTopNews: func,
+CategoryNews.propTypes = {
+  fetchTopNewsForCategory: func.isRequired,
   isLoading: bool,
   articles: arrayOf(
     shape({
@@ -91,24 +93,30 @@ TopNews.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
   latestPage: number,
+  name: string.isRequired,
+  country: string.isRequired,
 };
 
-TopNews.defaultProps = {
-  fetchTopNews: () => {},
+CategoryNews.defaultProps = {
   isLoading: false,
   articles: [],
   latestPage: 0,
 };
 
-const mapState = ({ topNews }) => ({
-  isLoading: topNews.isLoading,
-  articles: topNews.articles,
-  latestPage: topNews.latestPage,
-});
+const mapState = ({ categories, country }, { route }) => {
+  const { params } = route || {};
+  const { categoryName } = params || {};
+  const category =
+    categories.categories.find((c) => c.name === categoryName) || {};
+  return {
+    ...category,
+    country: country.country,
+  };
+};
 
 const mapDispatch = (dispatch) => ({
-  fetchTopNews: (page, pageSize, isLoadingMore) =>
-    dispatch(getTopNews(page, pageSize, isLoadingMore)),
+  fetchTopNewsForCategory: (page, pageSize, category, isLoadingMore) =>
+    dispatch(getTopNewsForCategory(page, pageSize, category, isLoadingMore)),
 });
 
-export default connect(mapState, mapDispatch)(TopNews);
+export default connect(mapState, mapDispatch)(CategoryNews);

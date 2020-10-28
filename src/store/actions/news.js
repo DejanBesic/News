@@ -23,7 +23,7 @@ export const getTopNews = (page, pageSize = 20, isLoadingMore = false) => (
   dispatch
 ) => {
   dispatch(fetchTopNewsStart(!isLoadingMore));
-  fetchPagedNews(page, pageSize)
+  fetchPagedNews({ page, pageSize, country: 'GB' })
     .then((res) => {
       if (!res || res.status !== 'ok') {
         return dispatch(fetchTopNewsFailure());
@@ -38,6 +38,6 @@ export const getTopNews = (page, pageSize = 20, isLoadingMore = false) => (
     .catch((err) => dispatch(fetchTopNewsFailure(err)));
 };
 
-export const articleSelector = ({ articles }, id) => {
+export const selectArticleById = ({ articles }, id) => {
   return articles && articles.find((article) => article.id === id);
 };
