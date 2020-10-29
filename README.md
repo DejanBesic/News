@@ -1,5 +1,5 @@
 # News
-    React Native app for presenting top news from publicly available [api](https://newsapi.org)
+    React Native app for presenting top news from publicly available [api](https://newsapi.org/)
 
 ## Setup 
     git clone https://github.com/DejanBesic/News.git
