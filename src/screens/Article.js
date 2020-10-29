@@ -25,20 +25,18 @@ const Description = styled.Text`
   font-size: 18px;
 `;
 
-const Article = ({ title, urlToImage, content }) => {
-  return (
-    <Container>
-      <Title>{title}</Title>
-      <StyledImage
-        source={{
-          uri: urlToImage,
-          priority: FastImage.priority.normal,
-        }}
-      />
-      <Description>{content}</Description>
-    </Container>
-  );
-};
+const Article = ({ title, urlToImage, content }) => (
+  <Container>
+    <Title>{title}</Title>
+    <StyledImage
+      source={{
+        uri: urlToImage,
+        priority: FastImage.priority.normal,
+      }}
+    />
+    <Description>{content}</Description>
+  </Container>
+);
 
 const { string } = PropTypes;
 Article.propTypes = {

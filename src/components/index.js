@@ -1,13 +1,17 @@
 import ArticleThumbnail from './article/ArticleThumbnail';
-import TouchableIcon from './common/TouchableIcon';
-import NavigationBar from './navigation/NavigationBar';
 import CarouselWithPagination from './common/CarouselWithPagination';
+import CollapsableContent from './common/CollapsibleContent';
+import ErrorMessage from './common/ErrorMessage';
+import NavigationBar from './navigation/NavigationBar';
 import SearchBox from './common/SearchBox';
+import TouchableIcon from './common/TouchableIcon';
 
 export {
   ArticleThumbnail,
-  NavigationBar,
-  TouchableIcon,
   CarouselWithPagination,
+  CollapsableContent,
+  ErrorMessage,
+  NavigationBar,
   SearchBox,
+  TouchableIcon,
 };

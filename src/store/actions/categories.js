@@ -42,7 +42,14 @@ export const getTopNewsForCategory = (
       };
       return dispatch(fetchCategoriesSuccess(payload));
     })
-    .catch((err) => dispatch(fetchCategoriesFailure(err)));
+    .catch(() => {
+      const payload = {
+        categoryName: category,
+        isLoading: false,
+        errorMessage: 'There are no results found in this section',
+      };
+      dispatch(fetchCategoriesFailure(payload));
+    });
 };
 
 export const areCategoriesValid = (categories) =>

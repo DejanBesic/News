@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FlatList, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
-import { ArticleThumbnail, CarouselWithPagination } from 'Components';
+import {
+  ArticleThumbnail,
+  CarouselWithPagination,
+  CollapsableContent,
+  ErrorMessage,
+} from 'Components';
 import { screenKeys } from 'Actions/navigation';
 import Colors from 'Utils/colors';
 import {
@@ -32,15 +37,15 @@ const TopCategoryNews = ({
   country,
   navigation,
 }) => {
+  const [expandedCategory, setExapandedCategory] = useState('');
+
   const onRefresh = () => {
-    categories.forEach((category) => {
-      fetchTopNewsForCategory(1, 20, category.name, false);
-    });
+    fetchTopNewsForCategory(1, 20, expandedCategory, false);
   };
 
   useEffect(() => {
     onRefresh();
-  }, [country]);
+  }, [country, expandedCategory]);
 
   const handleArticlePress = (article) => {
     navigation.navigate(screenKeys.article, { ...article });
@@ -66,20 +71,34 @@ const TopCategoryNews = ({
   };
 
   const renderVerticalList = ({ item }) => {
-    const { name, articles, isLoading, isTitle } = item || {};
-    if (isLoading) {
-      return <ActivityIndicator color={Colors.curiousBlue} size="large" />;
-    }
+    const { name, articles, isLoading, isTitle, errorMessage } = item || {};
     if (isTitle) {
       return <Title>{`Top 5 news by categories from ${country}:`}</Title>;
     }
+    let content;
+
+    if (isLoading) {
+      content = <ActivityIndicator color={Colors.curiousBlue} size="large" />;
+    } else if (errorMessage) {
+      content = <ErrorMessage text={errorMessage} />;
+    } else {
+      content = (
+        <CarouselWithPagination
+          data={articles}
+          component={renderArticleThumbnail}
+        />
+      );
+    }
+    const isExpanded = name === expandedCategory;
     return (
-      <CarouselWithPagination
-        title={name}
-        data={articles}
-        component={renderArticleThumbnail}
+      <CollapsableContent
         onTitlePress={() => handleCategoryPress(name)}
-      />
+        title={name}
+        isExpanded={isExpanded}
+        setIsExpanded={() => setExapandedCategory(isExpanded ? '' : name)}
+      >
+        {content}
+      </CollapsableContent>
     );
   };
 

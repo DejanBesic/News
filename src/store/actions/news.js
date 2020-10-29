@@ -35,7 +35,11 @@ export const getTopNews = (page, pageSize = 20, isLoadingMore = false) => (
       };
       return dispatch(fetchTopNewsSuccess(payload));
     })
-    .catch((err) => dispatch(fetchTopNewsFailure(err)));
+    .catch(() =>
+      dispatch(
+        fetchTopNewsFailure('There are no results found in this section')
+      )
+    );
 };
 
 export const selectArticleById = ({ articles }, id) => {

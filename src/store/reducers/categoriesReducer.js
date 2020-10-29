@@ -71,6 +71,7 @@ const refreshStateWithNewArticles = (
     };
   });
 };
+
 const updateStateOnStart = (state, { categoryName, isLoading }) => {
   const categories = [...state.categories];
   return categories.map((category) => {
@@ -81,6 +82,25 @@ const updateStateOnStart = (state, { categoryName, isLoading }) => {
     return {
       ...category,
       isLoading,
+      errorMessage: null,
+    };
+  });
+};
+
+const updateStateOnFailure = (
+  state,
+  { categoryName, isLoading, errorMessage }
+) => {
+  const categories = [...state.categories];
+  return categories.map((category) => {
+    if (category.name !== categoryName) {
+      return { ...category };
+    }
+
+    return {
+      ...category,
+      isLoading,
+      errorMessage,
     };
   });
 };
@@ -102,8 +122,7 @@ const newsReducer = (state = initialState, { type, payload }) => {
     case FETCH_CATEGORIES_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        errorMessage: payload,
+        categories: updateStateOnFailure(state, payload),
       };
 
     default:

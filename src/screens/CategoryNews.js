@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components/native';
-import { ArticleThumbnail } from 'Components';
+import { ArticleThumbnail, ErrorMessage } from 'Components';
 import { screenKeys } from 'Actions/navigation';
 import { getTopNewsForCategory } from 'Actions/categories';
-
-const Container = styled.View``;
 
 const List = styled.FlatList`
   padding: 15px;
@@ -29,6 +27,7 @@ const CategoryNews = ({
   name,
   latestPage,
   country,
+  errorMessage,
 }) => {
   useEffect(() => {
     fetchTopNewsForCategory(1, 20, name, false);
@@ -64,17 +63,19 @@ const CategoryNews = ({
     );
   };
 
+  if (errorMessage) {
+    return <ErrorMessage text={errorMessage} />;
+  }
+
   return (
-    <Container>
-      <List
-        renderItem={renderItem}
-        data={[{ isTitle: true, id: 'title' }, ...articles]}
-        keyExtractor={(item) => item.id}
-        onEndReached={onEndReached}
-        refreshing={isLoading}
-        onRefresh={onRefresh}
-      />
-    </Container>
+    <List
+      renderItem={renderItem}
+      data={[{ isTitle: true, id: 'title' }, ...articles]}
+      keyExtractor={(item) => item.id}
+      onEndReached={onEndReached}
+      refreshing={isLoading}
+      onRefresh={onRefresh}
+    />
   );
 };
 
@@ -89,18 +90,20 @@ CategoryNews.propTypes = {
       urlToImage: string,
     })
   ),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+  navigation: shape({
+    navigate: func.isRequired,
   }).isRequired,
   latestPage: number,
   name: string.isRequired,
   country: string.isRequired,
+  errorMessage: string,
 };
 
 CategoryNews.defaultProps = {
   isLoading: false,
   articles: [],
   latestPage: 0,
+  errorMessage: null,
 };
 
 const mapState = ({ categories, country }, { route }) => {
