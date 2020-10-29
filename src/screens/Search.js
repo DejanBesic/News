@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
-import { SearchBox, ArticleThumbnail } from 'Components';
+import { SearchBox, ArticleThumbnail, ErrorMessage } from 'Components';
 import { getTopNews } from 'Actions/news';
 import { screenKeys } from 'Actions/navigation';
 import { fetchPagedNews } from 'Utils/api';
 import { addIdsToListOfObjects } from 'Utils/id';
-
-const Container = styled.View``;
+import { View } from 'react-native';
 
 const List = styled.FlatList`
   padding: 15px;
@@ -18,10 +17,7 @@ const ListItemWrapper = styled.View`
   margin: 10px 0;
 `;
 
-const ErrorMessage = styled.Text`
-  color: red;
-  margin: 30px;
-`;
+const error = 'Could not find any results for this search';
 
 const TopNews = ({ country, navigation }) => {
   const [searchInput, setSearchInput] = useState('');
@@ -69,29 +65,30 @@ const TopNews = ({ country, navigation }) => {
       page: 1,
     };
     setIsLoading(true);
-    setErrorMessage('');
+    setErrorMessage(null);
     fetchPagedNews(params)
       .then((res) => {
-        console.log(res);
         setIsLoading(false);
         if (!res || res.status !== 'ok') {
-          setErrorMessage('Could not find any results for this search');
+          setErrorMessage(error);
           return;
         }
         setArticles(addIdsToListOfObjects(res.articles));
         if (!res.articles) {
-          setErrorMessage('Could not find any results for this search');
+          setErrorMessage(error);
         }
         setPage(1);
       })
       .catch(() => {
-        setErrorMessage('Could not find any results for this search');
+        setErrorMessage(error);
         setIsLoading(false);
       });
   };
 
   useEffect(() => {
-    onRefresh();
+    if (searchInput) {
+      onRefresh();
+    }
   }, [searchInput]);
 
   const renderItem = ({ item }) => {
@@ -110,9 +107,9 @@ const TopNews = ({ country, navigation }) => {
   };
 
   return (
-    <Container>
+    <View>
       <SearchBox value={searchInput} onChangeText={setSearchInput} />
-      {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
+      {errorMessage ? <ErrorMessage text={errorMessage} /> : null}
       {!errorMessage && articles && articles.length > 0 && (
         <List
           renderItem={renderItem}
@@ -123,7 +120,7 @@ const TopNews = ({ country, navigation }) => {
           onRefresh={onRefresh}
         />
       )}
-    </Container>
+    </View>
   );
 };
 

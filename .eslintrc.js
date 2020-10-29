@@ -32,10 +32,20 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/no-named-as-default': 0,
     'react/destructuring-assignment': [0],
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'only-multiline',
+        objects: 'only-multiline',
+        imports: 'only-multiline',
+        exports: 'only-multiline',
+        functions: 'never',
+      },
+    ],
     'prettier/prettier': [
       'error',
       {
-        trailingComma: 'all',
+        trailingComma: 'es5',
         singleQuote: true,
         printWidth: 80,
         semi: true,

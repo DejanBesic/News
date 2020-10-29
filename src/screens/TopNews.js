@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
-import { ArticleThumbnail } from 'Components';
+import { ArticleThumbnail, ErrorMessage } from 'Components';
 import { getTopNews } from 'Actions/news';
 import { screenKeys } from 'Actions/navigation';
-
-const Container = styled.View``;
 
 const List = styled.FlatList`
   padding: 15px;
@@ -27,6 +25,7 @@ const TopNews = ({
   articles,
   navigation,
   latestPage,
+  errorMessage,
 }) => {
   useEffect(() => {
     fetchTopNews(1, 20);
@@ -62,21 +61,23 @@ const TopNews = ({
     );
   };
 
+  if (errorMessage) {
+    return <ErrorMessage text={errorMessage} />;
+  }
+
   return (
-    <Container>
-      <List
-        renderItem={renderItem}
-        data={[{ isTitle: true, id: 'title' }, ...articles]}
-        keyExtractor={(item) => item.id}
-        onEndReached={onEndReached}
-        refreshing={isLoading}
-        onRefresh={onRefresh}
-      />
-    </Container>
+    <List
+      renderItem={renderItem}
+      data={[{ isTitle: true, id: 'title' }, ...articles]}
+      keyExtractor={(item) => item.id}
+      onEndReached={onEndReached}
+      refreshing={isLoading}
+      onRefresh={onRefresh}
+    />
   );
 };
 
-const { func, bool, arrayOf, shape, number } = PropTypes;
+const { func, bool, arrayOf, shape, number, string } = PropTypes;
 TopNews.propTypes = {
   fetchTopNews: func,
   isLoading: bool,
@@ -87,10 +88,11 @@ TopNews.propTypes = {
       urlToImage: string,
     })
   ),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+  navigation: shape({
+    navigate: func.isRequired,
   }).isRequired,
   latestPage: number,
+  errorMessage: string,
 };
 
 TopNews.defaultProps = {
@@ -98,12 +100,14 @@ TopNews.defaultProps = {
   isLoading: false,
   articles: [],
   latestPage: 0,
+  errorMessage: null,
 };
 
 const mapState = ({ topNews }) => ({
   isLoading: topNews.isLoading,
   articles: topNews.articles,
   latestPage: topNews.latestPage,
+  errorMessage: topNews.errorMessage,
 });
 
 const mapDispatch = (dispatch) => ({

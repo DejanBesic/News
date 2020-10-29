@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android --port 9000",
+    "android:build": "cd ./android && ./gradlew assembleRelease && cd ..",
     "ios": "react-native run-ios",
     "start": "react-native start --port 9000",
     "start:reset": "react-native start --reset-cache --port 9000",
