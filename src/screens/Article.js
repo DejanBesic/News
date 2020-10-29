@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
-import { selectArticleById } from 'Actions/news';
-import { selectArticleFromCategoryById } from 'Actions/categories';
 
 const Container = styled.ScrollView`
   padding: 15px 10px;
@@ -55,14 +53,13 @@ Article.defaultProps = {
   content: '',
 };
 
-const mapState = ({ topNews, categories }, { route }) => {
+const mapState = (state, { route }) => {
   const { params } = route || {};
-  const { id, isCategory } = params || {};
-  const article = isCategory
-    ? selectArticleFromCategoryById(categories, id)
-    : selectArticleById(topNews, id);
+  const { title, urlToImage, content } = params || {};
   return {
-    ...article,
+    title,
+    urlToImage,
+    content,
   };
 };
 

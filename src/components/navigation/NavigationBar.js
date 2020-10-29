@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { toggleSideBar } from 'Actions/navigation';
+import { screenKeys, toggleSideBar } from 'Actions/navigation';
 import { setCountry } from 'Actions/country';
 import Colors from 'Utils/colors';
 import TouchableIcon from '../common/TouchableIcon';
@@ -30,19 +30,25 @@ const Wrapper = styled.View`
 const Country = styled.Text`
   font-size: 20px;
   font-weight: bold;
-  color: ${({ country, name }) =>
-    (country === name && Colors.black) || Colors.white};
+  color: ${({ selected }) => (selected && Colors.black) || Colors.white};
 `;
 
 const CountryButton = styled(TouchableOpacity)`
   padding: 5px;
 `;
 
-const NavigationBar = (props) => {
-  const { useHamburgerMenu, children, onCountryChange, country } = props;
+const NavigationBar = ({
+  useHamburgerMenu,
+  onCountryChange,
+  country,
+  title,
+  children,
+}) => {
   const navigation = useNavigation();
   const useBackArrow = navigation.canGoBack();
-
+  const titleName = title || children;
+  const isCountryDisabled =
+    titleName === screenKeys.topNews || titleName === screenKeys.article;
   return (
     <Container>
       {useHamburgerMenu && !useBackArrow && (
@@ -52,16 +58,24 @@ const NavigationBar = (props) => {
         <TouchableIcon name="arrow-left" onPress={() => navigation.goBack()} />
       )}
       <Wrapper>
-        <Title isUsingIcon={useHamburgerMenu || useBackArrow}>{children}</Title>
+        <Title isUsingIcon={useHamburgerMenu || useBackArrow}>
+          {title || children}
+        </Title>
       </Wrapper>
       <Wrapper>
-        <CountryButton onPress={() => onCountryChange('GB')}>
-          <Country name="GB" country={country}>
+        <CountryButton
+          disabled={isCountryDisabled}
+          onPress={() => onCountryChange('GB')}
+        >
+          <Country name="GB" selected={country === 'GB'}>
             GB
           </Country>
         </CountryButton>
-        <CountryButton onPress={() => onCountryChange('US')}>
-          <Country name="US" country={country}>
+        <CountryButton
+          disabled={isCountryDisabled}
+          onPress={() => onCountryChange('US')}
+        >
+          <Country name="US" selected={country === 'US'}>
             US
           </Country>
         </CountryButton>
@@ -73,14 +87,16 @@ const NavigationBar = (props) => {
 const { string, bool, func } = PropTypes;
 NavigationBar.propTypes = {
   useHamburgerMenu: bool,
-  children: string,
+  title: string,
   onCountryChange: func.isRequired,
   country: string.isRequired,
+  children: string,
 };
 
 NavigationBar.defaultProps = {
   useHamburgerMenu: false,
-  children: '',
+  title: null,
+  children: null,
 };
 
 const mapState = ({ country }) => ({

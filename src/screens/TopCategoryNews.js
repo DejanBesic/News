@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { FlatList, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { ArticleThumbnail, CarouselWithPagination } from 'Components';
 import { screenKeys } from 'Actions/navigation';
-import { ActivityIndicator } from 'react-native';
 import Colors from 'Utils/colors';
 import {
   getTopNewsForCategory,
@@ -14,8 +14,6 @@ import {
 const Container = styled.View`
   padding: 15px 0;
 `;
-
-const List = styled.FlatList``;
 
 const ListItemWrapper = styled.View`
   margin: 10px 0 0;
@@ -34,14 +32,18 @@ const TopCategoryNews = ({
   country,
   navigation,
 }) => {
-  useEffect(() => {
+  const onRefresh = () => {
     categories.forEach((category) => {
       fetchTopNewsForCategory(1, 20, category.name, false);
     });
+  };
+
+  useEffect(() => {
+    onRefresh();
   }, [country]);
 
-  const handleArticlePress = (id) => {
-    navigation.navigate(screenKeys.article, { id, isCategory: true });
+  const handleArticlePress = (article) => {
+    navigation.navigate(screenKeys.article, { ...article });
   };
 
   const handleCategoryPress = (categoryName) => {
@@ -57,7 +59,7 @@ const TopCategoryNews = ({
           title={title}
           description={description}
           urlToImage={urlToImage}
-          onPress={() => handleArticlePress(id)}
+          onPress={() => handleArticlePress(item)}
         />
       </ListItemWrapper>
     );
@@ -65,7 +67,9 @@ const TopCategoryNews = ({
 
   const renderVerticalList = ({ item }) => {
     const { name, articles, isLoading, isTitle } = item || {};
-    if (isLoading) return <ActivityIndicator color={Colors.curiousBlue} />;
+    if (isLoading) {
+      return <ActivityIndicator color={Colors.curiousBlue} size="large" />;
+    }
     if (isTitle) {
       return <Title>{`Top 5 news by categories from ${country}:`}</Title>;
     }
@@ -81,10 +85,12 @@ const TopCategoryNews = ({
 
   return (
     <Container>
-      <List
+      <FlatList
         renderItem={renderVerticalList}
         data={[{ isTitle: true, name: 'title' }, ...categories]}
         keyExtractor={(item) => item.name}
+        onRefresh={onRefresh}
+        refreshing={false}
       />
     </Container>
   );

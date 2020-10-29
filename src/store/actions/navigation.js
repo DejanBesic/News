@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { DrawerActions } from '@react-navigation/native';
+import {
+  DrawerActions,
+  getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
+import {} from '@react-navigation/native';
 
 export const navigationRef = React.createRef();
 
@@ -11,12 +15,12 @@ export const screenKeys = {
   topNews: 'Top News',
 };
 
-export const navigate = (name, params) => {
-  navigationRef.current?.navigate(name, params);
+export const getHeaderTitle = (route) => {
+  return getFocusedRouteNameFromRoute(route) ?? 'Top News';
 };
 
-export const goBack = () => {
-  navigationRef.current?.goBack();
+export const navigate = (name, params) => {
+  navigationRef.current?.navigate(name, params);
 };
 
 export const toggleSideBar = (navigation) => {
