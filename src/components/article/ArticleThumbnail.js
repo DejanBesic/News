@@ -50,7 +50,7 @@ ArticleThumbnail.propTypes = {
 
 ArticleThumbnail.defaultProps = {
   title: '',
-  urlToImage: '',
+  urlToImage: null,
   description: '',
 };
 

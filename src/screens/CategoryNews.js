@@ -34,8 +34,8 @@ const CategoryNews = ({
     fetchTopNewsForCategory(1, 20, name, false);
   }, []);
 
-  const handleArticlePress = (id) => {
-    navigation.navigate(screenKeys.article, { id, isCategory: true });
+  const handleArticlePress = (article) => {
+    navigation.navigate(screenKeys.article, { ...article });
   };
 
   const onEndReached = () => {
@@ -58,7 +58,7 @@ const CategoryNews = ({
           title={title}
           description={description}
           urlToImage={urlToImage}
-          onPress={() => handleArticlePress(id)}
+          onPress={() => handleArticlePress(item)}
         />
       </ListItemWrapper>
     );

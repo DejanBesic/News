@@ -32,8 +32,8 @@ const TopNews = ({
     fetchTopNews(1, 20);
   }, []);
 
-  const handleArticlePress = (id) => {
-    navigation.navigate(screenKeys.article, { id });
+  const handleArticlePress = (article) => {
+    navigation.navigate(screenKeys.article, { ...article });
   };
 
   const onEndReached = () => {
@@ -56,7 +56,7 @@ const TopNews = ({
           title={title}
           description={description}
           urlToImage={urlToImage}
-          onPress={() => handleArticlePress(id)}
+          onPress={() => handleArticlePress(item)}
         />
       </ListItemWrapper>
     );
